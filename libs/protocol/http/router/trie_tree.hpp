@@ -84,7 +84,7 @@ private:
             }
 
             size_t j = 0;//:stream.flv
-            while (j < path.size() && path[j] != '/' && path[j] != '.') {
+            while (j < path.size() && path[j] != '/') {
                 j++;
             }
 
@@ -161,7 +161,7 @@ private:
         child = node.get_child(':');//   /apd  /:app
         if (child) {
             size_t j = 0;  // app/   test.flv
-            while (j < path.size() && path[j] != '/' && path[j] != '.') {
+            while (j < path.size() && path[j] != '/') {
                 j++;
             }
             std::string param_val(path.substr(0, j));

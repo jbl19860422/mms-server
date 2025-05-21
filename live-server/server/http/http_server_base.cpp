@@ -136,7 +136,7 @@ boost::asio::awaitable<void> HttpServerBase::static_fs_handler(std::string root_
     co_return;
 }
 
-boost::asio::awaitable<bool> HttpServerBase::on_new_request(std::shared_ptr<HttpServerSession> session,                 std::shared_ptr<HttpRequest> req, std::shared_ptr<HttpResponse> resp) {
+boost::asio::awaitable<bool> HttpServerBase::on_new_request(std::shared_ptr<HttpServerSession> session, std::shared_ptr<HttpRequest> req, std::shared_ptr<HttpResponse> resp) {
     CORE_DEBUG("get new http request, path:{}", req->get_path());
     switch(req->get_method()) {
         case GET : {

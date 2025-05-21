@@ -34,17 +34,17 @@ bool HttpApiServer::register_route() {
     if (!ret) {
         return false;
     }
-    ret = on_get("/api/get_domain_streams/:domain", std::bind(&HttpApiServer::get_domain_streams, this, std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
+    ret = on_get("/api/get_domain_streams", std::bind(&HttpApiServer::get_domain_streams, this, std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
     if (!ret) {
         return false;
     }
 
-    ret = on_get("/api/get_app_streams/:domain/:app", std::bind(&HttpApiServer::get_app_streams, this, std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
+    ret = on_get("/api/get_app_streams", std::bind(&HttpApiServer::get_app_streams, this, std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
     if (!ret) {
         return false;
     }
 
-    ret = on_post("/api/cut_off_stream/:domain/:app/:stream", std::bind(&HttpApiServer::cut_off_stream, this, std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
+    ret = on_post("/api/cut_off_stream", std::bind(&HttpApiServer::cut_off_stream, this, std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
     if (!ret) {
         return false;
     }
@@ -79,7 +79,7 @@ boost::asio::awaitable<void> HttpApiServer::get_api_version(std::shared_ptr<Http
     (void)session;
     (void)req;
     Json::Value root;
-    auto domain = req->get_path_param("domain");
+    auto domain = req->get_query_param("domain");
     auto app_streams = SourceManager::get_instance().get_sources(domain);
     for (auto it_app = app_streams.begin(); it_app != app_streams.end(); it_app++) {
         Json::Value japp_streams;
@@ -112,8 +112,8 @@ boost::asio::awaitable<void> HttpApiServer::get_app_streams(std::shared_ptr<Http
     (void)session;
     (void)req;
     Json::Value root;
-    auto domain = req->get_path_param("domain");
-    auto app = req->get_path_param("app");
+    auto domain = req->get_query_param("domain");
+    auto app = req->get_query_param("app");
     auto streams = SourceManager::get_instance().get_sources(domain, app);
     Json::Value jstreams;
     for (auto & stream : streams) {
@@ -144,9 +144,9 @@ boost::asio::awaitable<void> HttpApiServer::cut_off_stream(std::shared_ptr<HttpS
                                                             std::shared_ptr<HttpResponse> resp) 
 {
     (void)session;
-    auto domain = req->get_path_param("domain");
-    auto app = req->get_path_param("app");
-    auto stream = req->get_path_param("stream");
+    auto domain = req->get_query_param("domain");
+    auto app = req->get_query_param("app");
+    auto stream = req->get_query_param("stream");
     auto source = SourceManager::get_instance().get_source(domain, app, stream);
     if (!source) {
         co_return co_await response_json(resp, -1, "stream not found");
