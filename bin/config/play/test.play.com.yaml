@@ -1,8 +1,8 @@
 type: play
 name: test.play.com
 publish_domain: test.publish.com
-key_file: test.play.com.key
-cert_file: test.play.com.crt
+#key_file: test.play.com.key
+#cert_file: test.play.com.crt
 apps:
   - name: app
     # play_auth_check:

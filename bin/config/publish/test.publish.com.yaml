@@ -1,7 +1,7 @@
 type: publish
 name: test.publish.com
-key_file: test.publish.com.key
-cert_file: test.publish.com.crt
+#key_file: test.publish.com.key
+#cert_file: test.publish.com.crt
 apps:
   - name: app #接入点名称
     record:
