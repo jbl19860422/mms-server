@@ -5,12 +5,15 @@ file(GLOB_RECURSE MMS_BASE_LIB_SOURCES  "${CMAKE_CURRENT_SOURCE_DIR}/*.h"
                                         "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" 
                                         "${CMAKE_CURRENT_SOURCE_DIR}/*.cc")
 
+# add_compile_options(-Wno-error)
 add_library(mms-base STATIC ${MMS_BASE_LIB_SOURCES})
 add_dependencies(mms-base 
     libboost
     libjsoncpp
     libboringssl
+    libspdlog
 )
+
 
 target_include_directories(mms-base 
                            PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../)

@@ -10,6 +10,8 @@ add_dependencies(mms-codec
     libjsoncpp
     libboringssl
     libopus
+    libfaad2
+    libaac
     mms-base
 )
 

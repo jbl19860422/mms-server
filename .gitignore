@@ -4,6 +4,7 @@ build/
 compile_commands.json
 bin/mms-live-server
 bin/db/
+bin/logs/
 .vscode/
 lib/
 console/

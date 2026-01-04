@@ -28,15 +28,14 @@ ExternalProject_Add(libleveldb
     GIT_TAG 1.23
     GIT_SUBMODULES ""
     GIT_SHALLOW FALSE
-    CONFIGURE_COMMAND cmake -S ../libleveldb -B build -DCMAKE_BUILD_TYPE=Release -DLEVELDB_BUILD_TESTS=OFF -DLEVELDB_BUILD_TESTS=OFF -DLEVELDB_BUILD_BENCHMARKS=OFF -DCMAKE_INSTALL_PREFIX=${PROJECT_BINARY_DIR}
+    CONFIGURE_COMMAND cmake -S ../libleveldb -B build -DCMAKE_BUILD_TYPE=Release -DLEVELDB_BUILD_TESTS=OFF -DLEVELDB_BUILD_TESTS=OFF -DLEVELDB_BUILD_BENCHMARKS=OFF -DCMAKE_INSTALL_PREFIX=${PROJECT_BINARY_DIR} -DCMAKE_POLICY_VERSION_MINIMUM=3.5
     BUILD_COMMAND make -C build -j4
     INSTALL_COMMAND make -C build install
 )
 
 ExternalProject_Add(libboost
     EXCLUDE_FROM_ALL 1
-    # URL https://archives.boost.io/release/1.82.0/source/boost_1_82_0.tar.gz
-    URL https://ulive1.cn-gd.ufileos.com/boost_1_82_0.tar.gz
+    URL https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
     BUILD_IN_SOURCE 1
     CONFIGURE_COMMAND ./bootstrap.sh --prefix=${PROJECT_BINARY_DIR}
     BUILD_COMMAND ./b2 cxxflags="-std=c++20" --with-program_options --with-system --with-thread --with-date_time --with-regex --with-serialization --with-context --with-coroutine link=static
@@ -48,7 +47,7 @@ ExternalProject_Add(libyamlcpp
     EXCLUDE_FROM_ALL 1
     URL https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz
     BUILD_IN_SOURCE 1
-    CONFIGURE_COMMAND cmake -B build -DYAML_CPP_BUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${PROJECT_BINARY_DIR}
+    CONFIGURE_COMMAND cmake -B build -DYAML_CPP_BUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${PROJECT_BINARY_DIR} -DCMAKE_POLICY_VERSION_MINIMUM=3.5
     BUILD_COMMAND make -C build  -j4
     INSTALL_COMMAND make -C build install -j4
 )
@@ -57,7 +56,7 @@ ExternalProject_Add(libjsoncpp
     EXCLUDE_FROM_ALL 1
     URL https://github.com/open-source-parsers/jsoncpp/archive/refs/tags/1.8.4.tar.gz
     BUILD_IN_SOURCE 1
-    CONFIGURE_COMMAND cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${PROJECT_BINARY_DIR}
+    CONFIGURE_COMMAND cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${PROJECT_BINARY_DIR} -DCMAKE_POLICY_VERSION_MINIMUM=3.5
     BUILD_COMMAND make -C build -j4
     INSTALL_COMMAND make -C build install -j4
 )
@@ -66,7 +65,7 @@ ExternalProject_Add(libboringssl
     EXCLUDE_FROM_ALL 1
     GIT_REPOSITORY https://gitee.com/jbl19860422/boringssl.git
     BUILD_IN_SOURCE 1
-    CONFIGURE_COMMAND cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="-Wno-stringop-overflow" -DCMAKE_INSTALL_PREFIX=${PROJECT_BINARY_DIR}
+    CONFIGURE_COMMAND cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="-Wno-stringop-overflow" -DCMAKE_CXX_FLAGS="-Wno-error=ignored-attributes" -DCMAKE_INSTALL_PREFIX=${PROJECT_BINARY_DIR}
     BUILD_COMMAND make -C build -j4
     INSTALL_COMMAND make -C build install -j4
 )
@@ -78,7 +77,7 @@ ExternalProject_Add(libzlib
     BUILD_IN_SOURCE 1
     GIT_REPOSITORY https://gitee.com/jbl19860422/zlib
     GIT_TAG v1.2.13
-    CONFIGURE_COMMAND cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${PROJECT_BINARY_DIR}
+    CONFIGURE_COMMAND cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${PROJECT_BINARY_DIR} -DCMAKE_POLICY_VERSION_MINIMUM=3.5
     BUILD_COMMAND make -C build -j4
     INSTALL_COMMAND make -C build install -j4
 )
@@ -105,7 +104,7 @@ ExternalProject_Add(libfaad2
     EXCLUDE_FROM_ALL 1
     GIT_REPOSITORY https://gitee.com/jbl19860422/faad2.git
     BUILD_IN_SOURCE 1
-    CONFIGURE_COMMAND cmake . -DCMAKE_INSTALL_PREFIX=${PROJECT_BINARY_DIR} -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release
+    CONFIGURE_COMMAND cmake . -DCMAKE_INSTALL_PREFIX=${PROJECT_BINARY_DIR} -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5
     BUILD_COMMAND make -j4
     INSTALL_COMMAND make install
 )
