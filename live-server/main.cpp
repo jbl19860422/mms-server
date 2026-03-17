@@ -54,23 +54,6 @@ void system_setup() {
     }
 }
 
-// 获取当前进程被允许的 CPU 亲和性设置
-int GetCpuAffinity(){
-    cpu_set_t process_mask;
-    CPU_ZERO(&process_mask);
-    int avaliable_cpus=0;
-
-    // 对于单机性能测试使用 taskset 其启动的进程和很有帮助!
-    if(sched_getaffinity(0, sizeof(process_mask), &process_mask)==0) {
-        avaliable_cpus = CPU_COUNT(&process_mask);
-    }else{
-        avaliable_cpus = std::thread::hardware_concurrency();
-    }
-    spdlog::info("mms-live-server is running on {} CPUs", avaliable_cpus);
-
-    return avaliable_cpus;
-}
-
 int main(int argc, char *argv[]) {
     system_setup();
     boost::program_options::variables_map vm;
@@ -106,7 +89,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    thread_pool_inst::get_mutable_instance().start(GetCpuAffinity());
+    thread_pool_inst::get_mutable_instance().start(std::thread::hardware_concurrency());
     System::get_instance().init(thread_pool_inst::get_mutable_instance().get_worker(RAND_WORKER));
     HttpConnPools::get_instance().set_worker(thread_pool_inst::get_mutable_instance().get_worker(RAND_WORKER));
     
